@@ -1,0 +1,420 @@
+{
+    "Parameters": {
+        "BootstrapVersion": {
+            "Default": "/cdk-bootstrap/hnb659fds/version",
+            "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+            "Type": "AWS::SSM::Parameter::Value<String>"
+        }
+    },
+    "Resources": {
+        "RegulomeDevVpc87594302": {
+            "Properties": {
+                "CidrBlock": "10.4.0.0/16",
+                "EnableDnsHostnames": true,
+                "EnableDnsSupport": true,
+                "InstanceTenancy": "default",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc"
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::VPC"
+        },
+        "RegulomeDevVpcIGW102C54A6": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc"
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::InternetGateway"
+        },
+        "RegulomeDevVpcVPCGW242FB30F": {
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "RegulomeDevVpcIGW102C54A6"
+                },
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::VPCGatewayAttachment"
+        },
+        "RegulomeDevVpcisolatedSubnet1RouteTableAssociation694E23D7": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet1RouteTableB5AB546E"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet1Subnet29854E88"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcisolatedSubnet1RouteTableB5AB546E": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet1"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcisolatedSubnet1Subnet29854E88": {
+            "Properties": {
+                "AvailabilityZone": "dummy1a",
+                "CidrBlock": "10.4.48.0/20",
+                "MapPublicIpOnLaunch": false,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "isolated"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Isolated"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet1"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegulomeDevVpcisolatedSubnet2RouteTable9D58B72A": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet2"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcisolatedSubnet2RouteTableAssociation1E147DB1": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet2RouteTable9D58B72A"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet2SubnetFAE5D9F8"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcisolatedSubnet2SubnetFAE5D9F8": {
+            "Properties": {
+                "AvailabilityZone": "dummy1b",
+                "CidrBlock": "10.4.64.0/20",
+                "MapPublicIpOnLaunch": false,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "isolated"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Isolated"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet2"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegulomeDevVpcisolatedSubnet3RouteTableAssociation28162B82": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet3RouteTableDB67EFAA"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcisolatedSubnet3SubnetC236A145"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcisolatedSubnet3RouteTableDB67EFAA": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet3"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcisolatedSubnet3SubnetC236A145": {
+            "Properties": {
+                "AvailabilityZone": "dummy1c",
+                "CidrBlock": "10.4.80.0/20",
+                "MapPublicIpOnLaunch": false,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "isolated"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Isolated"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/isolatedSubnet3"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegulomeDevVpcpublicSubnet1DefaultRouteF7E0398F": {
+            "DependsOn": [
+                "RegulomeDevVpcVPCGW242FB30F"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "RegulomeDevVpcIGW102C54A6"
+                },
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet1RouteTableE1ABD832"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        },
+        "RegulomeDevVpcpublicSubnet1RouteTableAssociationA48E75FC": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet1RouteTableE1ABD832"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet1Subnet352B61C6"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcpublicSubnet1RouteTableE1ABD832": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet1"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcpublicSubnet1Subnet352B61C6": {
+            "Properties": {
+                "AvailabilityZone": "dummy1a",
+                "CidrBlock": "10.4.0.0/20",
+                "MapPublicIpOnLaunch": true,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "public"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Public"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet1"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegulomeDevVpcpublicSubnet2DefaultRouteBE9944E9": {
+            "DependsOn": [
+                "RegulomeDevVpcVPCGW242FB30F"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "RegulomeDevVpcIGW102C54A6"
+                },
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet2RouteTableF00BE0F6"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        },
+        "RegulomeDevVpcpublicSubnet2RouteTableAssociation13E2C112": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet2RouteTableF00BE0F6"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet2Subnet79FF33ED"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcpublicSubnet2RouteTableF00BE0F6": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet2"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcpublicSubnet2Subnet79FF33ED": {
+            "Properties": {
+                "AvailabilityZone": "dummy1b",
+                "CidrBlock": "10.4.16.0/20",
+                "MapPublicIpOnLaunch": true,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "public"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Public"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet2"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegulomeDevVpcpublicSubnet3DefaultRoute50F32A1A": {
+            "DependsOn": [
+                "RegulomeDevVpcVPCGW242FB30F"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "RegulomeDevVpcIGW102C54A6"
+                },
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet3RouteTableC49BF228"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        },
+        "RegulomeDevVpcpublicSubnet3RouteTableAssociation0D849B63": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet3RouteTableC49BF228"
+                },
+                "SubnetId": {
+                    "Ref": "RegulomeDevVpcpublicSubnet3SubnetDB54CF5A"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "RegulomeDevVpcpublicSubnet3RouteTableC49BF228": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet3"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "RegulomeDevVpcpublicSubnet3SubnetDB54CF5A": {
+            "Properties": {
+                "AvailabilityZone": "dummy1c",
+                "CidrBlock": "10.4.32.0/20",
+                "MapPublicIpOnLaunch": true,
+                "Tags": [
+                    {
+                        "Key": "aws-cdk:subnet-name",
+                        "Value": "public"
+                    },
+                    {
+                        "Key": "aws-cdk:subnet-type",
+                        "Value": "Public"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "NetworkStack/RegulomeDevVpc/publicSubnet3"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "RegulomeDevVpc87594302"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        }
+    },
+    "Rules": {
+        "CheckBootstrapVersion": {
+            "Assertions": [
+                {
+                    "Assert": {
+                        "Fn::Not": [
+                            {
+                                "Fn::Contains": [
+                                    [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5"
+                                    ],
+                                    {
+                                        "Ref": "BootstrapVersion"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+                }
+            ]
+        }
+    }
+}
