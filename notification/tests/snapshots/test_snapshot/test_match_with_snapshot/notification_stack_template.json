@@ -1,0 +1,184 @@
+{
+    "Parameters": {
+        "AwsNotificationsRegulomeSlackWebhookSlackWebhookUrlParameter9C27EFEE": {
+            "Default": "SLACK_WEBHOOK_URL_FOR_REGULOME_AWS_NOTIFICATIONS_CHANNEL",
+            "Type": "AWS::SSM::Parameter::Value<String>"
+        },
+        "BootstrapVersion": {
+            "Default": "/cdk-bootstrap/hnb659fds/version",
+            "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+            "Type": "AWS::SSM::Parameter::Value<String>"
+        }
+    },
+    "Resources": {
+        "AwsNotificationsRegulomeChannel565BB73D": {
+            "Properties": {
+                "ConfigurationName": "aws-notifications",
+                "IamRoleArn": {
+                    "Fn::GetAtt": [
+                        "AwsNotificationsRegulomeChannelConfigurationRoleAED0EF7C",
+                        "Arn"
+                    ]
+                },
+                "SlackChannelId": "C05NLSGQE6Q",
+                "SlackWorkspaceId": "T4AFMQ7J4",
+                "SnsTopicArns": [
+                    {
+                        "Ref": "AwsNotificationsRegulomeChannelAlarmNotificationTopicFE528F0C"
+                    }
+                ]
+            },
+            "Type": "AWS::Chatbot::SlackChannelConfiguration"
+        },
+        "AwsNotificationsRegulomeChannelAlarmNotificationTopicFE528F0C": {
+            "Type": "AWS::SNS::Topic"
+        },
+        "AwsNotificationsRegulomeChannelConfigurationRoleAED0EF7C": {
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "chatbot.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                }
+            },
+            "Type": "AWS::IAM::Role"
+        },
+        "AwsNotificationsRegulomeSlackWebhookConnectionEA354E96": {
+            "Properties": {
+                "AuthParameters": {
+                    "BasicAuthParameters": {
+                        "Password": "123",
+                        "Username": "abc"
+                    }
+                },
+                "AuthorizationType": "BASIC"
+            },
+            "Type": "AWS::Events::Connection"
+        },
+        "AwsNotificationsRegulomeSlackWebhookPassEventsToSlackED884812": {
+            "Properties": {
+                "EventPattern": {
+                    "detail": {
+                        "metadata": {
+                            "includes_slack_notification": [
+                                true
+                            ]
+                        }
+                    }
+                },
+                "State": "ENABLED",
+                "Targets": [
+                    {
+                        "Arn": {
+                            "Fn::GetAtt": [
+                                "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationApiDestination9DA47FCE",
+                                "Arn"
+                            ]
+                        },
+                        "Id": "Target0",
+                        "InputPath": "$.detail.data.slack",
+                        "RoleArn": {
+                            "Fn::GetAtt": [
+                                "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationEventsRoleAE3AB4E1",
+                                "Arn"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Type": "AWS::Events::Rule"
+        },
+        "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationApiDestination9DA47FCE": {
+            "Properties": {
+                "ConnectionArn": {
+                    "Fn::GetAtt": [
+                        "AwsNotificationsRegulomeSlackWebhookConnectionEA354E96",
+                        "Arn"
+                    ]
+                },
+                "HttpMethod": "POST",
+                "InvocationEndpoint": {
+                    "Ref": "AwsNotificationsRegulomeSlackWebhookSlackWebhookUrlParameter9C27EFEE"
+                }
+            },
+            "Type": "AWS::Events::ApiDestination"
+        },
+        "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationEventsRoleAE3AB4E1": {
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "events.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                }
+            },
+            "Type": "AWS::IAM::Role"
+        },
+        "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationEventsRoleDefaultPolicy803057D2": {
+            "Properties": {
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "events:InvokeApiDestination",
+                            "Effect": "Allow",
+                            "Resource": {
+                                "Fn::GetAtt": [
+                                    "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationApiDestination9DA47FCE",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "PolicyName": "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationEventsRoleDefaultPolicy803057D2",
+                "Roles": [
+                    {
+                        "Ref": "AwsNotificationsRegulomeSlackWebhookSlackIncomingWebhookDestinationEventsRoleAE3AB4E1"
+                    }
+                ]
+            },
+            "Type": "AWS::IAM::Policy"
+        }
+    },
+    "Rules": {
+        "CheckBootstrapVersion": {
+            "Assertions": [
+                {
+                    "Assert": {
+                        "Fn::Not": [
+                            {
+                                "Fn::Contains": [
+                                    [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5"
+                                    ],
+                                    {
+                                        "Ref": "BootstrapVersion"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+                }
+            ]
+        }
+    }
+}
